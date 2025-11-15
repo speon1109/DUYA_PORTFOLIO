@@ -9,6 +9,7 @@
     <section>
         <h1>Hi! I'm Aaron</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium mollitia neque vel tempore obcaecati ut nostrum sunt. Atque, sed, reiciendis sint porro, facere natus quidem adipisci possimus suscipit consequatur dolores!</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium mollitia neque vel tempore obcaecati ut nostrum sunt. Atque, sed, reiciendis sint porro, facere natus quidem adipisci possimus suscipit consequatur dolores!</p>
     </section>
     <hr>
     <section>
