@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function register(Request $request){
+    /*public function register(Request $request){
         $fields= $request->validate([
             'name'=>'required',
             'email'=>'required|email|unique:users,email',
@@ -21,8 +21,47 @@ class UserController extends Controller
             'user'=>$user,
             'token'=>$token,
         ],201);
+    }*/
+    public function showLogin(){
+        return view('authentication.login');
+    }
+    public function showRegister(){
+        return view('authentication.register');
+    }
+    public function register(Request $request){
+        $fields= $request->validate([
+            'name'=>'required|string',
+            'email'=>'required|email|unique:users,email',
+            'password'=>'required|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+        ]);
+        $fields['password']=bcrypt($fields['password']);
+        $user= User::create($fields);
+        auth()->login($user);
+        return redirect('/');
     }
     public function login(Request $request){
+        $fields= $request->validate([
+            'email'=>'required|email|exists:users,email',
+            'password'=>'required',
+        ]);
+        if(!Auth::attempt($fields)){
+            return back();
+        }
+        $request->session()->regenerate();
+        return view('home');
+    }
+
+    public function logout(Request $request){
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+    
+
+
+
+    /*public function login(Request $request){
         $fields= $request->validate([
             'email'=>'required|email|exists:users,email',
             'password'=>'required',
@@ -38,11 +77,11 @@ class UserController extends Controller
             'user'=>$user,
             'token'=>$token,
         ],200);
-    }
-    public function logout(Request $request){
+    }*/
+    /*public function logout(Request $request){
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'message'=>'Logged out',
         ]);
-    }
+    }*/
 }
