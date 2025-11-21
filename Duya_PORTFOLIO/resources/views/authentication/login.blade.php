@@ -1,7 +1,7 @@
 @include('components.header')
 @guest
 <div>
-    <form action="/login" method="POST">
+    <form action="/api/login" method="POST">
         @csrf
         <input name="email" type="email" placeholder="Enter your email">
         <input name="password" type="password" placeholder="Enter your password">
