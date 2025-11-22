@@ -2,6 +2,7 @@
 
 <div>
     <form action="/createProject" method="POST" enctype="multipart/form-data">
+        @csrf
         <input type="text" name="title" placeholder="Enter title">
         <textarea name="short_description" placeholder="Enter short description"></textarea>
         <textarea name="description" placeholder="Enter description"></textarea>
@@ -11,8 +12,9 @@
                 @if (in_array($tag->id,old('tags',[]))) checked @endif>
                 {{$tag->name}}
             </label>
-            
         @endforeach
+        <input type="file" name="images[]">
+        <button>Add</button>
     </form>
 </div>
 

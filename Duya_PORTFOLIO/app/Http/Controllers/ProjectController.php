@@ -18,8 +18,6 @@ class ProjectController extends Controller
     }
 
     public function showProjects(){ //get
-        $tags= Tag::all();
-        $photos= Photo::all();
         $projects= auth()->user()->projects()->with('tags', 'photos')->latest()->get();
         return view('dashboard', compact('projects'));
     }
@@ -55,7 +53,7 @@ class ProjectController extends Controller
                 $project->photos()->create(compact('path'));
             }   
         }
-        return redirect()->route('showProjects');
+        return redirect()->route('showProject',$project->id);
     }
     
     public function updateProject(Request $request, Project $project){ //patch
@@ -79,7 +77,7 @@ class ProjectController extends Controller
 
         $project->tags()->sync($fields['tags'] ?? $project->tags());
 
-        if(!empty($request->hasFile('images'))){
+        if($request->hasFile('images')){
             foreach ($request->file('images') as $image) {
                 $path= $image->store('photos','public');
                 $project->photos()->create(compact('path'));
