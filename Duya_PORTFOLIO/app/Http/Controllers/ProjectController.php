@@ -31,6 +31,7 @@ class ProjectController extends Controller
     public function createProject(Request $request){ //post
         $fields= $request->validate([
             'title'=>'required|string',
+            'short_description'=>'required|string',
             'description'=>'required|string',
             'source_code'=>'string',
             'tags'=>'array',
@@ -41,6 +42,7 @@ class ProjectController extends Controller
 
         $project= Project::create([
             'title'=>strip_tags($fields['title']),
+            'short_description'=>strip_tags($fields['short_description']),
             'description'=>strip_tags($fields['description']),
             'source_code'=>strip_tags($fields['source_code']),
         ]);
@@ -59,6 +61,7 @@ class ProjectController extends Controller
     public function updateProject(Request $request, Project $project){ //patch
         $fields= $request->validate([
             'title'=>'string',
+            'short_description'=>'string',
             'description'=>'string',
             'source_code'=>'string',
             'tags'=>'array',
@@ -69,6 +72,7 @@ class ProjectController extends Controller
 
         $project->update([
             'title'=>strip_tags($fields['title'] ?? $project->title),
+            'short_description'=>strip_tags($fields['short_description'] ?? $project->short_description),
             'description'=>strip_tags($fields['description'] ?? $project->description),
             'source_code'=>strip_tags($fields['source_code'] ?? $project->source_code),
         ]);
