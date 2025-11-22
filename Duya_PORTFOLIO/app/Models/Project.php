@@ -11,7 +11,6 @@ class Project extends Model
     protected $fillable = [
         'title',
         'description',
-        'image_path',
         'source_code',
     ];
     public function user(){
@@ -19,5 +18,8 @@ class Project extends Model
     }
     public function tags(){
         return $this->belongsToMany(Tag::class, 'project_tag');
+    }
+    public function photos(){
+        return $this->hasMany(Photo::class);
     }
 }
