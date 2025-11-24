@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function addProject(){ //get
-        return view('add');
+        $tags= Tag::all();
+        return view('add', compact('tags'));
     }
 
     public function editProject(Project $project){ //get
-        return view('edit', compact('project'));
+        $tags= Tag::all();
+        return view('edit', compact('project','tags'));
     }
 
     public function showProjects(){ //get
@@ -34,7 +36,7 @@ class ProjectController extends Controller
             'source_code'=>'string',
             'tags'=>'array',
             'tags/*'=>'exists:tags,id',
-            'images'=>'array|image|max:2048',
+            'images'=>'array',
             'images.*' => 'image|max:2048',
         ]);
 
@@ -64,7 +66,7 @@ class ProjectController extends Controller
             'source_code'=>'string',
             'tags'=>'array',
             'tags/*'=>'exists:tags,id',
-            'images'=>'array|image|max:2048',
+            'images'=>'array',
             'images.*' => 'image|max:2048',
         ]);
 
@@ -75,7 +77,7 @@ class ProjectController extends Controller
             'source_code'=>strip_tags($fields['source_code'] ?? $project->source_code),
         ]);
 
-        $project->tags()->sync($fields['tags'] ?? $project->tags());
+        $project->tags()->sync($fields['tags'] ?? []);
 
         if($request->hasFile('images')){
             foreach ($request->file('images') as $image) {
