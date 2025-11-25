@@ -4,7 +4,6 @@
     <form action="/updateProject{{$project->id}}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="text" name="title" placeholder="Enter title">
-        <textarea name="short_description" placeholder="Enter short description"></textarea>
         <textarea name="description" placeholder="Enter description"></textarea>
         @foreach ($tags as $tag)
             <label>

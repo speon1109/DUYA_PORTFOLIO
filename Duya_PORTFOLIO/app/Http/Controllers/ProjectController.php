@@ -24,10 +24,6 @@ class ProjectController extends Controller
         return view('dashboard', compact('projects'));
     }
 
-    public function showProject(Project $project){ //get
-        return view('showProject', compact('project'));
-    }
-
     public function createProject(Request $request){ //post
         $fields= $request->validate([
             'title'=>'required|string',
